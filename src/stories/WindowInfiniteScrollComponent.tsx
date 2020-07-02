@@ -8,34 +8,32 @@ export default class WindowInfiniteScrollComponent extends React.Component<
   State
 > {
   state = {
-    data: new Array(100).fill(1),
+    data: new Array(10).fill(1),
   };
 
-  next = () => {
+  next = (): void => {
     setTimeout(() => {
-      const newData = [...this.state.data, new Array(100).fill(1)];
+      const newData = [...this.state.data, ...new Array(10).fill(1)];
       this.setState({ data: newData });
     }, 2000);
   };
-  render() {
+  render(): JSX.Element {
     return (
-      <>
-        <InfiniteScroll
-          hasMore={true}
-          next={this.next}
-          loader={<h1>Loading...</h1>}
-          dataLength={this.state.data.length}
-        >
-          {this.state.data.map((_, i) => (
-            <div
-              key={i}
-              style={{ height: 30, margin: 4, border: '1px solid hotpink' }}
-            >
-              #{i + 1} row
-            </div>
-          ))}
-        </InfiniteScroll>
-      </>
+      <InfiniteScroll
+        hasMore={true}
+        next={this.next}
+        loader={<h1>Loading...</h1>}
+        dataLength={this.state.data.length}
+      >
+        {this.state.data.map((_, i) => (
+          <div
+            key={i}
+            style={{ height: 30, margin: 4, border: '1px solid hotpink' }}
+          >
+            #{i + 1} row
+          </div>
+        ))}
+      </InfiniteScroll>
     );
   }
 }
