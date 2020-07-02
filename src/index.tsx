@@ -120,7 +120,7 @@ export default class InfiniteScroll extends Component<Props, State> {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (this.el) {
       this.el.removeEventListener('scroll', this
         .throttledOnScrollListener as EventListenerOrEventListenerObject);
@@ -137,7 +137,7 @@ export default class InfiniteScroll extends Component<Props, State> {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(props: Props) {
+  UNSAFE_componentWillReceiveProps(props: Props): void {
     // do nothing when dataLength and key are unchanged
     if (
       this.props.key === props.key &&
@@ -152,7 +152,7 @@ export default class InfiniteScroll extends Component<Props, State> {
     });
   }
 
-  getScrollableTarget = () => {
+  getScrollableTarget = (): HTMLElement | null => {
     if (this.props.scrollableTarget instanceof HTMLElement)
       return this.props.scrollableTarget;
     if (typeof this.props.scrollableTarget === 'string') {
@@ -242,7 +242,7 @@ export default class InfiniteScroll extends Component<Props, State> {
   isElementAtBottom(
     target: HTMLElement,
     scrollThreshold: string | number = 0.8
-  ) {
+  ): boolean {
     const clientHeight =
       target === document.body || target === document.documentElement
         ? window.screen.availHeight
@@ -262,7 +262,7 @@ export default class InfiniteScroll extends Component<Props, State> {
     );
   }
 
-  onScrollListener = (event: MouseEvent) => {
+  onScrollListener = (event: MouseEvent): void => {
     if (typeof this.props.onScroll === 'function') {
       // Execute this callback in next tick so that it does not affect the
       // functionality of the library.
@@ -292,7 +292,7 @@ export default class InfiniteScroll extends Component<Props, State> {
     this.lastScrollTop = target.scrollTop;
   };
 
-  render() {
+  render(): JSX.Element {
     const style = {
       height: this.props.height || 'auto',
       overflow: 'auto',
@@ -320,13 +320,17 @@ export default class InfiniteScroll extends Component<Props, State> {
       >
         <div
           className={`infinite-scroll-component ${this.props.className || ''}`}
-          ref={(infScroll: HTMLDivElement) => (this._infScroll = infScroll)}
+          ref={(infScroll: HTMLDivElement): HTMLElement =>
+            (this._infScroll = infScroll)
+          }
           style={style}
         >
           {this.props.pullDownToRefresh && (
             <div
               style={{ position: 'relative' }}
-              ref={(pullDown: HTMLDivElement) => (this._pullDown = pullDown)}
+              ref={(pullDown: HTMLDivElement): HTMLElement =>
+                (this._pullDown = pullDown)
+              }
             >
               <div
                 style={{
